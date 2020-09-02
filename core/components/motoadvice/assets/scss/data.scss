@@ -1,0 +1,248 @@
+$font-main: 'Gilroy', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif;
+$color-main: #1A1919;
+$color-main2: #ffffff;
+$color-accent: #FEDA2E;
+$color-bg: #E7E8EA;
+$sprite: '/assets/motoadvice/img/sprite.svg#';
+$container: 1316px;
+
+@mixin list-style() {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@mixin sr-only() {
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+@mixin text-decoration-color($value) {
+  -webkit-text-decoration-color: $value;
+  -moz-text-decoration-color: $value;
+  text-decoration-color: $value;
+}
+
+@mixin box-shadow($values) {
+  -webkit-box-shadow: $values;
+  box-shadow: $values;
+}
+
+@mixin object-fit($value: cover) {
+  -o-object-fit: $value;
+  object-fit: $value;
+}
+
+@mixin box-sizing($value: border-box) {
+  -webkit-box-sizing: $value;
+  -moz-box-sizing: $value;
+  box-sizing: $value;
+}
+
+@mixin transform($values) {
+  -webkit-transform: $values;
+  -moz-transform: $values;
+  -ms-transform: $values;
+  -o-transform: $values;
+  transform: $values;
+}
+
+@mixin transform-origin($values) {
+  -webkit-transform-origin: $values;
+  -moz-transform-origin: $values;
+  -ms-transform-origin: $values;
+  -o-transform-origin: $values;
+  transform-origin: $values;
+}
+
+@mixin transition($values) {
+  -webkit-transition: $values;
+  -moz-transition: $values;
+  -ms-transition: $values;
+  -o-transition: $values;
+  transition: $values;
+}
+
+@mixin column-count($value) {
+  -moz-column-count: $value;
+  -webkit-column-count: $value;
+  column-count: $value;
+}
+
+@mixin column-gap($value) {
+  -moz-column-gap: $value;
+  -webkit-column-gap: $value;
+  column-gap: $value;
+}
+
+@mixin flexbox() {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+@mixin flex-wrap($value: wrap) {
+  -webkit-flex-wrap: $value;
+  -ms-flex-wrap: $value;
+  flex-wrap: $value;
+}
+
+@mixin justify-content($value: space-between) {
+  -webkit-justify-content: $value;
+  justify-content: $value;
+}
+
+@mixin align-items($value: center) {
+  -ms-align-items: $value;
+  align-items: $value;
+}
+
+@mixin align-content($value) {
+  -ms-align-content: $value;
+  align-content: $value;
+}
+
+@mixin flex-direction($value: row) {
+  -webkit-flex-direction: $value;
+  -moz-flex-direction: $value;
+  -ms-flex-direction: $value;
+  flex-direction: $value;
+}
+
+@mixin flex-flow($value: row) {
+  -webkit-flex-flow: $value;
+  -moz-flex-flow: $value;
+  -ms-flex-flow: $value;
+  flex-flow: $value;
+}
+
+@mixin flex($values) {
+  -webkit-box-flex: $values;
+  -moz-box-flex: $values;
+  -webkit-flex: $values;
+  -ms-flex: $values;
+  flex: $values;
+}
+
+@mixin flex-basis($value: 0) {
+  -webkit-flex-basis: $value;
+  flex-basis: $value;
+}
+
+@mixin flex-shrink($value: 0) {
+  -webkit-flex-shrink: $value;
+  flex-shrink: $value;
+}
+
+@mixin flex-grow($value: 0) {
+  -webkit-flex-grow: $value;
+  flex-grow: $value;
+}
+
+@mixin order($value) {
+  -webkit-box-ordinal-group: $value;
+  -moz-box-ordinal-group: $value;
+  -ms-flex-order: $value;
+  -webkit-order: $value;
+  order: $value;
+}
+
+@mixin placeholder() {
+  &::-webkit-input-placeholder {
+    @content
+  }
+  &::-moz-placeholder {
+    @content
+  }
+  &:-moz-placeholder {
+    @content
+  }
+  &:-ms-input-placeholder {
+    @content
+  }
+}
+
+@mixin media($value1, $value2: min-width) {
+  @media only screen and ($value2: $value1) {
+    @content;
+  }
+}
+
+
+@function convert-angle($value, $unit) {
+  $convertable-units: deg grad turn rad;
+  $conversion-factors: 1 (10grad/9deg) (1turn/360deg) (3.1415926rad/180deg);
+  @if index($convertable-units, unit($value)) and index($convertable-units, $unit) {
+    @return $value
+             / nth($conversion-factors, index($convertable-units, unit($value)))
+             * nth($conversion-factors, index($convertable-units, $unit));
+  }
+
+  @warn "Cannot convert `#{unit($value)}` to `#{$unit}`.";
+}
+
+/// Test if `$value` is an angle
+/// @param {*} $value - Value to test
+/// @return {Bool}
+@function is-direction($value) {
+  $is-direction: index((to top, to top right, to right top, to right, to bottom right, to right bottom, to bottom, to bottom left, to left bottom, to left, to left top, to top left), $value);
+  $is-angle: type-of($value) == 'number' and index('deg' 'grad' 'turn' 'rad', unit($value));
+
+  @return $is-direction or $is-angle;
+}
+
+/// Convert a direction to legacy syntax
+/// @param {Keyword | Angle} $value - Value to convert
+/// @require {function} is-direction
+/// @require {function} convert-angle
+@function legacy-direction($value) {
+  @if is-direction($value) == false {
+    @warn "Cannot convert `#{$value}` to legacy syntax because it doesn't seem to be an angle or a direction";
+  }
+
+  $conversion-map: (
+          to top : bottom,
+          to top right : bottom left,
+          to right top : left bottom,
+          to right : left,
+          to bottom right : top left,
+          to right bottom : left top,
+          to bottom : top,
+          to bottom left : top right,
+          to left bottom : right top,
+          to left : right,
+          to left top : right bottom,
+          to top left : bottom right
+  );
+
+  @if map-has-key($conversion-map, $value) {
+    @return map-get($conversion-map, $value);
+  }
+
+  @return 90deg - convert-angle($value, 'deg');
+}
+
+/// Mixin printing a linear-gradient
+/// as well as a plain color fallback
+/// and the `-webkit-` prefixed declaration
+/// @access public
+/// @param {String | List | Angle} $direction - Linear gradient direction
+/// @param {Arglist} $color-stops - List of color-stops composing the gradient
+@mixin linear-gradient($direction, $color-stops...) {
+  @if is-direction($direction) == false {
+    $color-stops: ($direction, $color-stops);
+    $direction: 180deg;
+  }
+
+  background: nth(nth($color-stops, 1), 1);
+  background: -webkit-linear-gradient(legacy-direction($direction), $color-stops);
+  background: linear-gradient($direction, $color-stops);
+}
