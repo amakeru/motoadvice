@@ -7,10 +7,16 @@
 
 # User-specific stuff
 .idea/**/workspace.xml
+.idea/**/misc.xml
+.idea/**/deployment.xml
+.idea/**/modules.xml
+.idea/**/vcs.xml
+.idea/**/webServers.xml
 .idea/**/tasks.xml
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
+.idea/**/motoadvice.iml
 
 # Generated files
 .idea/**/contentModel.xml
