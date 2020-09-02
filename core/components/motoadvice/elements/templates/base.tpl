@@ -12,18 +12,18 @@
 
     {'!MinifyX'|snippet: [
         'cssSources' => '
-            /core/components/motoadvice/assets/scss/fonts.css,
-            /core/components/motoadvice/assets/scss/normalize.css,
+            /assets/motoadvice/scss/fonts.css,
+            /assets/motoadvice/scss/normalize.css,
 			/assets/motoadvice/plugins/lightgallery/css/lightgallery.min.css,
 			/assets/motoadvice/plugins/lightslider/css/lightslider.min.css,
-            /core/components/motoadvice/assets/scss/style.scss,
+            /assets/motoadvice/scss/style.scss,
         ',
         'jsSources' => '
             /assets/motoadvice/plugins/jquery.min.js,
 			/assets/motoadvice/plugins/lightgallery/js/lightgallery.min.js,
 			/assets/motoadvice/plugins/lightgallery/js/lg-video.min.js,
             /assets/motoadvice/plugins/lightslider/js/lightslider.min.js,
-            /core/components/motoadvice/assets/js/script.js
+            /assets/motoadvice/js/script.js
         '
     ]}
     {$_modx->getPlaceholder('MinifyX.css')}
